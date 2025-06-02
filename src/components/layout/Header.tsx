@@ -10,17 +10,65 @@ import { SunIcon, MoonIcon } from '@heroicons/react/24/solid'
 import { useTheme } from '@/context/ThemeContext'
 
 const companyLinks = [
-  { name: 'About Us', href: '/about' },
-  { name: 'Branding Guidelines', href: '/branding' },
-  { name: 'Team', href: '/team' },
-  { name: 'Partners', href: '/partners' },
-  { name: 'Events', href: '/events' },
+  {
+    name: 'About',
+    href: '/about',
+    subItems: [
+      { name: 'About us', href: '/about/about-us' },
+      { name: 'Brand guidelines', href: '/about/brand' },
+    ]
+  },
+  {
+    name: 'Team',
+    href: '/team',
+    description: "We're all about people"
+  },
+  {
+    name: 'Partners',
+    href: '/partners',
+    description: "We have more than just business partners"
+  },
+  {
+    name: 'Events',
+    href: '/events',
+    description: "Here, you'll see where we'll be presenting our products"
+  }
 ]
 
 const productLinks = [
-  { name: 'QAP', href: '/products/qap', description: 'Quality Assurance Platform' },
-  { name: 'QIAM', href: '/products/qiam', description: 'Identity and Access Management' },
-  { name: 'QSCIM', href: '/products/qscim', description: 'Security Information Management' },
+  {
+    name: 'QSCIM',
+    href: '/products/qscim',
+    logo: '/images/qscim-white-color.png',
+    subItems: [
+      { name: 'QSCIM Product Overview', href: '/products/qscim/overview' },
+      { name: 'QSCIM for IBM Verify SaaS', href: '/products/qscim/ibm-verify' },
+      { name: 'QSCIM for Ping Identity', href: '/products/qscim/ping-identity' },
+      { name: 'QSCIM for Okta', href: '/products/qscim/okta' },
+      { name: 'QSCIM ROI Calculator', href: '/products/qscim/roi-calculator' },
+      { name: 'ROI 5 Years - QSCIM for IGA Products', href: '/products/qscim/roi-5-years' },
+      { name: 'QSCIM Freemium', href: '/products/qscim/freemium' }
+    ]
+  },
+  {
+    name: 'QAP',
+    href: '/products/qap',
+    logo: '/images/qap-white-color.png',
+    subItems: [
+      { name: 'Product overview QAP', href: '/products/qap/overview' },
+      { name: 'QAP Canvas', href: '/products/qap/canvas' },
+      { name: 'OxyNexus', href: '/products/qap/oxynexus' }
+    ]
+  },
+  {
+    name: 'QIAM',
+    href: '/products/qiam',
+    logo: '/images/qiam-white-color-2.png',
+    subItems: [
+      { name: 'QIAM product overview', href: '/products/qiam/overview' },
+      { name: 'QIAM main features', href: '/products/qiam/features' }
+    ]
+  }
 ]
 
 export default function Header() {
@@ -28,12 +76,31 @@ export default function Header() {
   const { isDarkMode, toggleTheme } = useTheme()
 
   return (
-    <header className="bg-white dark:bg-dark-card border-b border-gray-200 dark:border-dark-border shadow-sm transition-colors duration-200">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#121212] border-b border-gray-200 dark:border-dark-border shadow-sm transition-colors duration-200">
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
-              <span className="text-2xl font-bold text-primary dark:text-white">Konneqt</span>
+              <div className="relative">
+                <Image
+                  src="/images/Black-Konneqt.png"
+                  alt="Konneqt Logo"
+                  width={180}
+                  height={48}
+                  className="block dark:hidden transition-opacity duration-200"
+                  priority
+                  sizes="180px"
+                />
+                <Image
+                  src="/images/White-Konneqt.png"
+                  alt="Konneqt Logo"
+                  width={180}
+                  height={48}
+                  className="hidden dark:block transition-opacity duration-200"
+                  priority
+                  sizes="180px"
+                />
+              </div>
             </Link>
           </div>
 
@@ -59,17 +126,59 @@ export default function Header() {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="absolute z-10 w-48 mt-2 bg-white dark:bg-dark-card rounded-md shadow-lg">
-                      <div className="py-2">
+                    <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-6xl -translate-x-1/2 transform px-2">
+                      <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div className="relative bg-white dark:bg-dark-card p-6">
+                          <div className="flex space-x-8">
                         {companyLinks.map((item) => (
+                              <div key={item.name} className="flex-1">
+                                <Link
+                                  href={item.href}
+                                  className="group inline-flex items-center"
+                                >
+                                  <p className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-primary">
+                                    {item.name}
+                                  </p>
+                                </Link>
+                                <div className="mt-3">
+                                  {item.subItems ? (
+                                    <ul className="space-y-2">
+                                      {item.subItems.map((subItem) => (
+                                        <li key={subItem.name}>
+                                          <Link
+                                            href={subItem.href}
+                                            className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white"
+                                          >
+                                            • {subItem.name}
+                                          </Link>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  ) : (
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                      {item.description}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-dark-border p-4">
                           <Link
-                            key={item.name}
-                            href={item.href}
-                            className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-border"
+                            href="/about"
+                            className="flow-root rounded-md px-6 py-2 transition duration-150 ease-in-out hover:bg-gray-100 dark:hover:bg-dark-card"
                           >
-                            {item.name}
+                            <span className="flex items-center">
+                              <span className="text-sm font-medium text-gray-900 dark:text-white">
+                                Learn more about Konneqt
+                              </span>
+                            </span>
+                            <span className="block text-sm text-gray-500 dark:text-gray-400">
+                              Discover our story and mission
+                            </span>
                           </Link>
-                        ))}
+                        </div>
                       </div>
                     </Popover.Panel>
                   </Transition>
@@ -94,18 +203,55 @@ export default function Header() {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="absolute z-10 w-64 mt-2 bg-white dark:bg-dark-card rounded-md shadow-lg">
-                      <div className="py-2">
+                    <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-6xl -translate-x-1/2 transform px-2">
+                      <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div className="relative bg-white dark:bg-dark-card p-6">
+                          <div className="flex space-x-12">
                         {productLinks.map((item) => (
+                              <div key={item.name} className="flex-1">
+                                <Link
+                                  href={item.href}
+                                  className="group inline-block"
+                                >
+                                  <div className="relative w-32 h-8">
+                                    <Image
+                                      src={item.logo}
+                                      alt={`${item.name} Logo`}
+                                      fill
+                                      className="object-contain object-left"
+                                    />
+                                  </div>
+                                </Link>
+                                <div className="mt-4">
+                                  <ul className="space-y-2">
+                                    {item.subItems.map((subItem) => (
+                                      <li key={subItem.name}>
+                                        <Link
+                                          href={subItem.href}
+                                          className="text-sm text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-white"
+                                        >
+                                          • {subItem.name}
+                                        </Link>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="bg-gray-50 dark:bg-dark-border p-4">
                           <Link
-                            key={item.name}
-                            href={item.href}
-                            className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-dark-border"
+                            href="/products/presentation"
+                            className="flow-root rounded-md px-6 py-2 transition duration-150 ease-in-out hover:bg-gray-100 dark:hover:bg-dark-card"
                           >
-                            <div className="font-medium text-gray-900 dark:text-white">{item.name}</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">{item.description}</div>
+                            <span className="flex items-center">
+                              <span className="text-sm font-medium text-gray-900 dark:text-white">
+                                Konneqt Product Presentation
+                              </span>
+                            </span>
                           </Link>
-                        ))}
+                        </div>
                       </div>
                     </Popover.Panel>
                   </Transition>

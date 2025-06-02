@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { ThemeProvider } from '@/context/ThemeContext'
+import CursorTrail from '@/components/CursorTrail'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,12 +19,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} transition-colors duration-200`}>
         <ThemeProvider>
+          <CursorTrail />
           <div className="min-h-screen bg-white dark:bg-dark-bg text-gray-900 dark:text-dark-text">
             <Header />
-            <main className="min-h-screen">
+            <main className="min-h-screen pt-16">
               {children}
             </main>
             <Footer />

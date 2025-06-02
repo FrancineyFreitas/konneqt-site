@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
 
 const footerLinks = {
@@ -30,15 +31,46 @@ const socialLinks = [
   { name: 'GitHub', icon: FaGithub, href: 'https://github.com/konneqt' },
 ]
 
+const quickLinks = [
+  { name: 'Partners', href: '#' },
+  { name: 'Jobs', href: '#' },
+  { name: 'Github', href: '#' },
+  { name: 'LinkedIn', href: '#' },
+  { name: 'Privacy Policy', href: '#' },
+  { name: 'Terms', href: '#' },
+]
+
+const locations = [
+  {
+    address: '7901 Kingspointe STE 10 - Orlando - Florida, FL 32819, USA'
+  },
+  {
+    address: 'Avenida Brigadeiro Faria Lima, 3200 - 3 Andar - Itaim Bibi, São Paulo-SP 04538-132, Brazil'
+  },
+  {
+    address: 'Emirates Towers , Floor 42 - Dubai - United Arab Emirates'
+  }
+]
+
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-dark-bg border-t border-gray-200 dark:border-dark-border transition-colors duration-200">
+    <footer className="bg-white dark:bg-black border-t border-gray-200 dark:border-dark-border transition-colors duration-200">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Konneqt</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Leading provider of cybersecurity solutions for enterprises worldwide.
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+          {/* First Column - Logo and Description */}
+          <div className="flex flex-col">
+            <div className="mb-4">
+              <Image
+                src="/images/White-Konneqt.png"
+                alt="Konneqt Logo"
+                width={250}
+                height={66}
+                priority
+                sizes="250px"
+              />
+            </div>
+            <p className="text-base text-gray-600 dark:text-gray-300 mb-6">
+              Konneqt enables organizations to achieve seamless integration and enhanced security. With our innovative products, we drive progress and advocate the adoption of open standards. This approach promotes flexibility and eliminates vendor lock-in, allowing organizations to customize their technology infrastructure to meet their unique needs without being restricted by proprietary systems.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((item) => {
@@ -59,48 +91,31 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Company</h4>
-            <ul className="space-y-2">
-              {footerLinks.company.map((item) => (
-                <li key={item.name}>
-                  <Link 
-                    href={item.href} 
-                    className="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-white transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
+          {/* Second Column - Locations */}
+          <div className="flex flex-col">
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Locations</h3>
+            <div className="space-y-6">
+              {locations.map((location, index) => (
+                <div key={index}>
+                  <p className="text-base text-gray-600 dark:text-gray-300">
+                    {location.address}
+                  </p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Products</h4>
-            <ul className="space-y-2">
-              {footerLinks.products.map((item) => (
-                <li key={item.name}>
+          {/* Third Column - Quick Links */}
+          <div className="flex flex-col items-end">
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-right w-full">Quick Links</h3>
+            <ul className="space-y-4 text-right w-full">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
                   <Link 
-                    href={item.href} 
-                    className="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-white transition-colors"
+                    href={link.href}
+                    className="text-base text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-white transition-colors"
                   >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Support</h4>
-            <ul className="space-y-2">
-              {footerLinks.support.map((item) => (
-                <li key={item.name}>
-                  <Link 
-                    href={item.href} 
-                    className="text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-white transition-colors"
-                  >
-                    {item.name}
+                    {link.name}
                   </Link>
                 </li>
               ))}
@@ -108,7 +123,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-200 dark:border-dark-border mt-12 pt-8 text-center text-gray-600 dark:text-gray-300">
+        <div className="max-w-6xl mx-auto border-t border-gray-200 dark:border-dark-border mt-12 pt-8 text-center text-base text-gray-600 dark:text-gray-300">
           <p>&copy; {new Date().getFullYear()} Konneqt. All rights reserved.</p>
         </div>
       </div>
